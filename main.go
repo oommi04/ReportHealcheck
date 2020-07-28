@@ -1,81 +1,57 @@
 package main
 
 import (
-	"encoding/csv"
+	"flag"
 	"fmt"
-	"net/http"
-	"os"
-	"time"
+	"github.com/oommi04/ReportHealcheck/setup"
+	"github.com/oommi04/ReportHealcheck/usecase/reportHealCheckUsecase"
+	"github.com/oommi04/ReportHealcheck/utils/common"
 )
 
-func Test1(url string) error {
-	// ts := time.Now()
-	resp, err := http.Get(url)
+var accessToken string
 
-	if err != nil {
-		return err
-	}
-	if resp.StatusCode != http.StatusOK {
-		return nil
-	}
-
-	return nil
-}
-
-type ReportWebSite struct {
-	TotalWebSites int   `json:"total_websites"`
-	Success       int   `json:"success"`
-	Failure       int   `json:"failure"`
-	TotalTime     int64 `json:"total_time"`
-}
-
-func ReadCSV(path string) (*[][]string, error) {
-	csvFile, err := os.Open(path)
-	if err != nil {
-		return nil, err
-	}
-	fmt.Println("Successfully Opened CSV file")
-	defer csvFile.Close()
-
-	csvLines, err := csv.NewReader(csvFile).ReadAll()
-	if err != nil {
-		return nil, err
-	}
-	return &csvLines, nil
+func init() {
+	flag.StringVar(&accessToken, "accessToken", "", "acessToken from line login")
 }
 
 func main() {
+	flag.Parse()
 
-	r := ReportWebSite{}
+	cfgs := setup.SetupConfigs()
+	lineLoginInstance := setup.SetupLineLogin(cfgs)
 
-	urlsLine, err := ReadCSV("emp.csv")
-	if err != nil {
-		fmt.Println("error csv")
-	}
-
-	r.TotalWebSites = len(*urlsLine)
-
-	for _, urlLine := range *urlsLine {
-		url := urlLine[0]
-
-		ts := time.Now()
-		err := Test1(url)
-		tn := time.Since(ts).Nanoseconds()
-
-		r.TotalTime = r.TotalTime + tn
+	if accessToken != "" {
+		err := lineLoginInstance.VerifyAccessToken(accessToken)
 
 		if err != nil {
-			r.Failure = r.Failure + 1
-		} else {
-			r.Success = r.Success + 1
+			fmt.Println(err)
+			fmt.Println("waiting for login")
+			token, err := lineLoginInstance.GetAccessTokenFromWebHook()
+			if err != nil {
+				panic(err)
+			}
+			accessToken = token
 		}
+
+	} else {
+		token, err := lineLoginInstance.GetAccessTokenFromWebHook()
+		if err != nil {
+			panic(err)
+		}
+		accessToken = token
 	}
 
-	fmt.Println("Perform website checking...")
-	fmt.Println("Done!")
-	fmt.Println("Checked webistes: ", r.TotalWebSites)
-	fmt.Println("Successful websites: ", r.Success)
-	fmt.Println("Failure websites: ", r.Failure)
-	fmt.Println("Total times to finished checking website: ", r.TotalTime/1000000000)
+	reportInsance := setup.SetupReport(cfgs, accessToken)
+	healCheckInstance := setup.SetupHealCheck()
 
+	csvPath := flag.Args()[0]
+
+	urlsLine, err := common.ReadCSV(csvPath)
+	if err != nil {
+		fmt.Println("cannot open csv file")
+		panic(err)
+	}
+
+	reportHealCheckUsecaseInstance := reportHealCheckUsecase.New(healCheckInstance, reportInsance)
+	reportHealCheckUsecaseInstance.Create(urlsLine)
 }
