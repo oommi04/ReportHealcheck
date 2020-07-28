@@ -19,7 +19,7 @@ or
 $ go run main.go -accessToken="token" emp.csv
 ```
 
-> NOTE: If you run with accessToken program will skip login process.But you accessToken are not validate program begin login process.
+> NOTE: If you run the program with the access token, the login process would be skipped. But if your access token is denied, the program will verify the login process again.
 
 #### How to build
 
