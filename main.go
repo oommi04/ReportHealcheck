@@ -6,6 +6,7 @@ import (
 	"github.com/oommi04/ReportHealcheck/setup"
 	"github.com/oommi04/ReportHealcheck/usecase/reportHealCheckUsecase"
 	"github.com/oommi04/ReportHealcheck/utils/common"
+	"os"
 )
 
 var accessToken string
@@ -16,6 +17,18 @@ func init() {
 
 func main() {
 	flag.Parse()
+
+	if len(flag.Args()) == 0 {
+		fmt.Println("plz specific .csv")
+		os.Exit(0)
+	}
+
+	csvPath := flag.Args()[0]
+	urlsLine, err := common.ReadCSV(csvPath)
+	if err != nil {
+		fmt.Println("cannot open csv file")
+		panic(err)
+	}
 
 	cfgs := setup.SetupConfigs()
 	lineLoginInstance := setup.SetupLineLogin(cfgs)
@@ -43,14 +56,6 @@ func main() {
 
 	reportInsance := setup.SetupReport(cfgs, accessToken)
 	healCheckInstance := setup.SetupHealCheck()
-
-	csvPath := flag.Args()[0]
-
-	urlsLine, err := common.ReadCSV(csvPath)
-	if err != nil {
-		fmt.Println("cannot open csv file")
-		panic(err)
-	}
 
 	reportHealCheckUsecaseInstance := reportHealCheckUsecase.New(healCheckInstance, reportInsance)
 	reportHealCheckUsecaseInstance.Create(urlsLine)
