@@ -2,14 +2,15 @@ package reportHealCheckUsecase
 
 import (
 	"fmt"
+	"sync"
+	"testing"
+	"time"
+
 	"github.com/oommi04/ReportHealcheck/domains/reportHealCheckDomain"
 	"github.com/oommi04/ReportHealcheck/externals/healcheck/mocks"
 	mocks2 "github.com/oommi04/ReportHealcheck/externals/report/mocks"
 	"github.com/oommi04/ReportHealcheck/utils/common"
 	"github.com/stretchr/testify/assert"
-	"sync"
-	"testing"
-	"time"
 )
 
 func TestReportHealCheckUsecase_Create_Success(t *testing.T) {
@@ -35,7 +36,7 @@ func TestReportHealCheckUsecase_Create_Success(t *testing.T) {
 
 			url := common.ParseURL(urlFromCSV)
 
-			mockHealCheckService.On("HealCheckWebsite", url).Once().Return(time.Duration(5),200,nil)
+			mockHealCheckService.On("HealCheckWebsite", url).Once().Return(time.Duration(5), 200, nil)
 
 			totalTime, statusCode, err := u.healCheckInstance.HealCheckWebsite(url)
 
@@ -72,5 +73,5 @@ func TestReportHealCheckUsecase_Create_Success(t *testing.T) {
 	fmt.Println("Checked webistes: ", r.TotalWebSites)
 	fmt.Println("Successful websites: ", r.Success)
 	fmt.Println("Failure websites: ", r.Failure)
-	fmt.Println("Total times to finished checking website: ", r.TotalTime)
+	fmt.Println("Total times to finished checking website: ", r.TotalTime/int64(time.Millisecond), " ms")
 }

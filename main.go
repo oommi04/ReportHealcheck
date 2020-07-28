@@ -3,10 +3,11 @@ package main
 import (
 	"flag"
 	"fmt"
+	"os"
+
 	"github.com/oommi04/ReportHealcheck/setup"
 	"github.com/oommi04/ReportHealcheck/usecase/reportHealCheckUsecase"
 	"github.com/oommi04/ReportHealcheck/utils/common"
-	"os"
 )
 
 var accessToken string
@@ -16,6 +17,7 @@ func init() {
 }
 
 func main() {
+
 	flag.Parse()
 
 	if len(flag.Args()) == 0 {
