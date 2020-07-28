@@ -11,7 +11,7 @@ import (
 	"net/http"
 )
 
-func(suite *ReportServiceSuite) TestReport_ReportHealCheck_Success() {
+func (suite *ReportServiceSuite) TestReport_ReportHealCheck_Success() {
 	r := reportHealCheckDomain.ReportHealCheck{}
 
 	var respBody interface{}
@@ -34,7 +34,7 @@ func(suite *ReportServiceSuite) TestReport_ReportHealCheck_Success() {
 	suite.NoError(err)
 }
 
-func(suite *ReportServiceSuite) TestReport_ReportHealCheck_Fail() {
+func (suite *ReportServiceSuite) TestReport_ReportHealCheck_Fail() {
 	uri := suite.service.endpoint
 	r := reportHealCheckDomain.ReportHealCheck{}
 
@@ -53,10 +53,9 @@ func(suite *ReportServiceSuite) TestReport_ReportHealCheck_Fail() {
 
 	suite.service.setHttpClient(mock)
 
-	errorExpect := errors.New("error status: " + common.IntToString(resp.StatusCode)+ " from " + uri)
+	errorExpect := errors.New("error status: " + common.IntToString(resp.StatusCode) + " from " + uri)
 
 	err := suite.service.ReportHealCheck(r)
 
 	suite.Equal(errorExpect, err)
 }
-

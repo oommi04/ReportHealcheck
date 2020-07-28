@@ -9,7 +9,7 @@ import (
 	"net/http"
 )
 
-func(client * ReportClient)ReportHealCheck(r reportHealCheckDomain.ReportHealCheck) error{
+func (client *ReportClient) ReportHealCheck(r reportHealCheckDomain.ReportHealCheck) error {
 	uri := client.endpoint
 	accessToken := "Bearer " + client.accessToken
 
@@ -30,7 +30,7 @@ func(client * ReportClient)ReportHealCheck(r reportHealCheckDomain.ReportHealChe
 	}
 
 	if resp.StatusCode != http.StatusOK {
-		return errors.New("error status: " + common.IntToString(resp.StatusCode)+ " from " + uri)
+		return errors.New("error status: " + common.IntToString(resp.StatusCode) + " from " + uri)
 	}
 
 	defer resp.Body.Close()

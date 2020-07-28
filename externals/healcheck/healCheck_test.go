@@ -9,7 +9,7 @@ import (
 type HealCheckServiceSuite struct {
 	suite.Suite
 
-	http           *mocks.HttpClient
+	http               *mocks.HttpClient
 	service            *HealcheckClient
 	integrationService *HealcheckClient
 }

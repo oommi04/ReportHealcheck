@@ -6,10 +6,10 @@ import (
 )
 
 type Configs struct {
-	PORT                         string
-	CHANELID string
-	CHANELSECRET string
-	REDIRECTURL string
+	PORT               string
+	CHANELID           string
+	CHANELSECRET       string
+	REDIRECTURL        string
 	REPORTHEALCHECLURL string
 }
 

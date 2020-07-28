@@ -9,7 +9,7 @@ import (
 type ReportServiceSuite struct {
 	suite.Suite
 
-	http           *mocks.HttpClient
+	http               *mocks.HttpClient
 	service            *ReportClient
 	integrationService *ReportClient
 }

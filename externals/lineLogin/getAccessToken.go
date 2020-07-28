@@ -61,7 +61,7 @@ func (client *LineLoginClient) GetAccessTokenFromCode(code string) (string, erro
 	if resp.StatusCode != http.StatusOK {
 		errorResp := ErrorMessage{}
 		_ = json.NewDecoder(resp.Body).Decode(&errorResp)
-		return "",errors.New("error: " + errorResp.ErrorDescription + " status: " + common.IntToString(resp.StatusCode)+ " from " + uri)
+		return "", errors.New("error: " + errorResp.ErrorDescription + " status: " + common.IntToString(resp.StatusCode) + " from " + uri)
 	}
 
 	respInfo := LineGetAccessTokenResponse{}

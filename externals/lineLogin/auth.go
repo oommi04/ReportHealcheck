@@ -7,7 +7,7 @@ import (
 	"net/http"
 )
 
-func(client *LineLoginClient)LineAuth() {
+func (client *LineLoginClient) LineAuth() {
 	lineAuthUrl := client.lineAuthEndpoint
 	chanelId := client.chanelId
 	state := "random_state_str"
@@ -16,7 +16,7 @@ func(client *LineLoginClient)LineAuth() {
 	common.Openbrowser(redirectUrlAuth)
 }
 
-func(client *LineLoginClient)GetAccessTokenFromWebHook() (string ,error){
+func (client *LineLoginClient) GetAccessTokenFromWebHook() (string, error) {
 	channelCodeForAccessToken := make(chan string)
 	code := ""
 

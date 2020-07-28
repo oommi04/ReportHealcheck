@@ -9,7 +9,7 @@ import (
 
 //go:generate mockery -name=HealcheckInterface
 type HealcheckInterface interface {
-	HealCheckWebsite(url *url.URL) (time.Duration, int,error)
+	HealCheckWebsite(url *url.URL) (time.Duration, int, error)
 }
 
 type HealcheckClient struct {
@@ -20,9 +20,9 @@ func New() *HealcheckClient {
 	c := HealcheckClient{
 		httpClient: &http.Client{
 			CheckRedirect: func(req *http.Request, via []*http.Request) error {
-			return http.ErrUseLastResponse
-		},
-		Timeout: 5 * time.Second,
+				return http.ErrUseLastResponse
+			},
+			Timeout: 5 * time.Second,
 		},
 	}
 

@@ -10,7 +10,7 @@ import (
 	"net/http"
 )
 
-func(suite *LineLoginServiceSuite)TestLineLoginClient_GetAccessToken_Success() {
+func (suite *LineLoginServiceSuite) TestLineLoginClient_GetAccessToken_Success() {
 	respBody := LineGetAccessTokenResponse{
 		"token",
 	}
@@ -33,7 +33,7 @@ func(suite *LineLoginServiceSuite)TestLineLoginClient_GetAccessToken_Success() {
 	suite.Equal(respBody.AccessToken, token)
 }
 
-func(suite *LineLoginServiceSuite)TestLineLoginClient_GetAccessToken_Fail() {
+func (suite *LineLoginServiceSuite) TestLineLoginClient_GetAccessToken_Fail() {
 	uri := suite.service.endpoint + getAccessTokenPath
 
 	respBody := ErrorMessage{
@@ -54,7 +54,7 @@ func(suite *LineLoginServiceSuite)TestLineLoginClient_GetAccessToken_Fail() {
 
 	_, err := suite.service.GetAccessTokenFromCode("code")
 
-	errorExpect := errors.New("error: " + respBody.ErrorDescription + " status: " + common.IntToString(resp.StatusCode)+ " from " + uri)
+	errorExpect := errors.New("error: " + respBody.ErrorDescription + " status: " + common.IntToString(resp.StatusCode) + " from " + uri)
 
 	suite.Equal(errorExpect, err)
 }

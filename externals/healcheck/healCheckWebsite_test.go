@@ -9,7 +9,7 @@ import (
 	"net/http"
 )
 
-func(suite *HealCheckServiceSuite) TestHealCheck_HealCheckWebsite_Success() {
+func (suite *HealCheckServiceSuite) TestHealCheck_HealCheckWebsite_Success() {
 	uri := common.ParseURL("http://localhost:8000/")
 
 	var respBody interface{}

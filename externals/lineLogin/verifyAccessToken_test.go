@@ -10,7 +10,7 @@ import (
 	"net/http"
 )
 
-func(suite *LineLoginServiceSuite)TestLineLoginClient_VerifyAccessToken_Success() {
+func (suite *LineLoginServiceSuite) TestLineLoginClient_VerifyAccessToken_Success() {
 	var respBody interface{}
 	creatorJSON, _ := json.Marshal(respBody)
 
@@ -30,7 +30,7 @@ func(suite *LineLoginServiceSuite)TestLineLoginClient_VerifyAccessToken_Success(
 	suite.NoError(err)
 }
 
-func(suite *LineLoginServiceSuite)TestLineLoginClient_VerifyAccessToken_Fail() {
+func (suite *LineLoginServiceSuite) TestLineLoginClient_VerifyAccessToken_Fail() {
 	uri := suite.service.endpoint + verifyAccessTokenPath
 
 	respBody := ErrorMessage{
@@ -51,7 +51,7 @@ func(suite *LineLoginServiceSuite)TestLineLoginClient_VerifyAccessToken_Fail() {
 
 	err := suite.service.VerifyAccessToken("token")
 
-	errorExpect := errors.New("error: " + respBody.ErrorDescription + " status: " + common.IntToString(resp.StatusCode)+ " from " + uri)
+	errorExpect := errors.New("error: " + respBody.ErrorDescription + " status: " + common.IntToString(resp.StatusCode) + " from " + uri)
 
 	suite.Equal(errorExpect, err)
 }

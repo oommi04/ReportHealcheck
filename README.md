@@ -19,7 +19,9 @@ or
 $ go run main.go -accessToken="token" emp.csv
 ```
 
-> NOTE: If you run the program with the access token, the login process would be skipped. But if your access token is denied, the program will verify the login process again.
+> NOTE: If you run the program with the access token, 
+>the login process would be skipped. But if your access token is denied, the program will verify the linelogin process again.
+>You must use ngrok tennel to localhost for linelogin webhook ([Line Login Document](https://developers.line.biz/en/docs/line-login/)) if login process has start such as ${ngorokurl}/callback
 
 #### How to build
 

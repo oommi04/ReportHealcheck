@@ -8,7 +8,7 @@ import (
 )
 
 var (
-	ErrorUnableCreateRequestReportHealCheck       = errors.New("unable create request from path reportHealCheck")
+	ErrorUnableCreateRequestReportHealCheck = errors.New("unable create request from path reportHealCheck")
 )
 
 //go:generate mockery -name=ReportClientInterface
@@ -21,7 +21,7 @@ type ReportClient struct {
 
 	endpoint string
 
-	accessToken     string
+	accessToken string
 }
 
 func New(endpoint string, accessToken string) *ReportClient {
@@ -29,7 +29,7 @@ func New(endpoint string, accessToken string) *ReportClient {
 		endpoint:   endpoint,
 		httpClient: http.DefaultClient,
 
-		accessToken:     accessToken,
+		accessToken: accessToken,
 	}
 }
 

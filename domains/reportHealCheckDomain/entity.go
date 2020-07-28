@@ -4,7 +4,7 @@ type WebStat struct {
 	Url          string
 	ErrorMessage string
 	Time         int64
-	StatusCode		int
+	StatusCode   int
 }
 
 type ReportHealCheck struct {

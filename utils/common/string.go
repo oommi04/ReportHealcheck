@@ -4,7 +4,7 @@ import (
 	"strconv"
 )
 
-func IntToString(n int) string{
+func IntToString(n int) string {
 	str := strconv.Itoa(n)
 	return str
 }

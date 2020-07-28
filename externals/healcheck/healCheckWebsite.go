@@ -7,14 +7,14 @@ import (
 	"time"
 )
 
-func(client *HealcheckClient)HealCheckWebsite(url *url.URL) (time.Duration, int,error) {
+func (client *HealcheckClient) HealCheckWebsite(url *url.URL) (time.Duration, int, error) {
 	var t1, t2, tEnd, tnh time.Time
 	//statusCodeNoHost := 11001
 
 	req, err := http.NewRequest("GET", url.String(), nil)
 
 	if err != nil {
-		return 0,0, err
+		return 0, 0, err
 	}
 
 	trace := &httptrace.ClientTrace{
@@ -44,5 +44,5 @@ func(client *HealcheckClient)HealCheckWebsite(url *url.URL) (time.Duration, int,
 
 	defer resp.Body.Close()
 
-	return tEnd.Sub(t1) , resp.StatusCode, nil
+	return tEnd.Sub(t1), resp.StatusCode, nil
 }

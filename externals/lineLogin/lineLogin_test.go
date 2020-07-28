@@ -10,7 +10,7 @@ import (
 type LineLoginServiceSuite struct {
 	suite.Suite
 
-	http           *mocks.HttpClient
+	http               *mocks.HttpClient
 	service            *LineLoginClient
 	integrationService *LineLoginClient
 }

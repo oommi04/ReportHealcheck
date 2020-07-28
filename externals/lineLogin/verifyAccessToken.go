@@ -9,7 +9,7 @@ import (
 
 var verifyAccessTokenPath = "/verify"
 
-func(client *LineLoginClient)VerifyAccessToken(accessToken string) error {
+func (client *LineLoginClient) VerifyAccessToken(accessToken string) error {
 	uri := client.endpoint + verifyAccessTokenPath
 	req, err := http.NewRequest("GET", uri, nil)
 
@@ -30,7 +30,7 @@ func(client *LineLoginClient)VerifyAccessToken(accessToken string) error {
 	if resp.StatusCode != http.StatusOK {
 		errorResp := ErrorMessage{}
 		_ = json.NewDecoder(resp.Body).Decode(&errorResp)
-		return errors.New("error: " + errorResp.ErrorDescription + " status: " + common.IntToString(resp.StatusCode)+ " from " + uri)
+		return errors.New("error: " + errorResp.ErrorDescription + " status: " + common.IntToString(resp.StatusCode) + " from " + uri)
 	}
 
 	defer resp.Body.Close()
